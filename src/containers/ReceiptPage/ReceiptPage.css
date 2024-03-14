@@ -1,0 +1,28 @@
+.csbsTypes{
+    font-family:微软雅黑, "Open Sans", "宋体";
+    /* font-weight: bold; */
+    font-size: 1em;
+    padding: 1px;
+    margin: 1px;
+}
+
+.ant-table-cell{
+    font-size: 0.9em;
+    border: 1px solid blue;
+}
+.td1{
+    text-align: center;
+    background-color: rgb(240, 253, 253);
+    border: 1px solid gray;
+}
+.td2{
+    text-align: left;
+    padding-left: 1.5em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid gray;
+}
+.table-cell{
+    font-size: 0.9em;
+    border: 1px solid gray;
+}
