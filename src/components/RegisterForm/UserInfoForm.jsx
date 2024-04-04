@@ -256,7 +256,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} />
+                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo&keyID=0`} />
                         </Col>
                         <Col span={12} style={{ textAlign: "left" }}>
                             <span>
@@ -270,7 +270,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} />
+                        <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA&keyID=0`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -284,7 +284,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} disabled={true}/>
+                        <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB&keyID=0`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -298,7 +298,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} />
+                        <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education&keyID=0`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -306,12 +306,25 @@ class UserInfoForm extends Component {
                         </Col></Row>
                 </Form.Item>
                 <Form.Item
-                    name="upload4"
+                    name="upload5"
                     label="上传在职证明"
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} />
+                        <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_employment&keyID=0`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
+                <Form.Item
+                    name="upload6"
+                    label="上传学信网图"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.CHESICC_filename ? axios.defaults.baseURL + this.props.application.userInfo.CHESICC_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_CHESICC&keyID=0`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>

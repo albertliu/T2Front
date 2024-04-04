@@ -4,9 +4,10 @@ import { actions as CertActions } from '../../modules/certificate'
 import { bindActionCreators } from 'redux'
 import { Row, Col, Tabs } from 'antd'
 import CertList from '../../components/CertList/CertList'
-import CourseList from '../../components/CertList/CourseList'
+// import CourseList from '../../components/CertList/CourseList'
 import RestCertList from '../../components/CertList/RestCertList'
-import RestCourseList from '../../components/CertList/RestCourseList'
+// import RestCourseList from '../../components/CertList/RestCourseList'
+import { actions as applicationActions } from "../../modules/application";
 
 
 const { TabPane } = Tabs;
@@ -32,7 +33,7 @@ class CourseSelect extends Component {
                             </Col>
                         </Row>
                     </TabPane>
-                    <TabPane tab="课程选择" key="2">
+                    {/* <TabPane tab="课程选择" key="2">
                         <Row>
                             <Col span={24}>
                                 <CourseList application={application} cert={cert} actions={actions} loading={loading} />
@@ -43,7 +44,7 @@ class CourseSelect extends Component {
                                 <RestCourseList application={application} cert={cert} actions={actions} loading={loading} />
                             </Col>
                         </Row>
-                    </TabPane>
+                    </TabPane> */}
                 </Tabs>
             </div>
         )
@@ -57,7 +58,8 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(CertActions, dispatch)
+    actions: bindActionCreators(CertActions, dispatch),
+    applicationActions: bindActionCreators(applicationActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseSelect);

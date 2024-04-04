@@ -12,7 +12,7 @@ import qs from 'qs'
 class Login extends Component {
 
     componentDidMount() {
-        const { register, checkin, ck_courseID, ck_placeID, ck_kindID, ck_date, ck_courseName } = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+        const { register, checkin, host, partner, ck_courseID, ck_placeID, ck_kindID, ck_date, ck_courseName } = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
         if (register) {
             this.props.userActions.updateRegister(register);
         } else {
@@ -25,6 +25,17 @@ class Login extends Component {
         }
         if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
             this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
+        }
+            console.log("host:", host)
+        if (host) {
+            this.props.actions.updateHost(host);
+        } else {
+            this.props.actions.updateHost(null);
+        }
+        if (partner) {
+            this.props.actions.updatePartner(partner);
+        } else {
+            this.props.actions.updatePartner(null);
         }
         this.props.actions.getCompanyInfo()
     }

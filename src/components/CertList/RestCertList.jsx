@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker } from 'antd';
+import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
-import 'antd/dist/antd.min.css'
+import 'antd/dist/antd.css'
+// import locale from 'antd/es/date-picker/locale/zh_CN';
+import { LocalFormat } from './localHelper';
+// import 'dayjs/locale/zh-cn';
+// import moment from 'moment';
+// import 'moment/dist/locale/zh-cn';
+// moment.locale('zh-cn');
 
 class RestCertList extends Component {
   constructor(props) {
@@ -19,14 +25,14 @@ class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0 })
+    console.log("addcert:", this.props.application.username, cert.certID, 0, 0, this.props.application.host)
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, x:`1`, host:this.props.application.host, partner:this.props.application.partner })
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, host:this.props.application.host, partner:this.props.application.partner })
     this.setState({ visible: false })
-
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -53,7 +59,7 @@ class RestCertList extends Component {
     this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0 })
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, host:this.props.application.host, partner:this.props.application.partner })
     this.setState({ visible: false, selectedItem: null })
   }
 
@@ -81,7 +87,7 @@ class RestCertList extends Component {
         renderItem={item => (
           <List.Item
             key={item.certID}
-            actions={item.reexamine !== 1 ? null :
+            actions={item.reexamine !== 1 ? [<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{ color: 'darkOrange' }}><PlusOutlined /></a>] :
               [
                 <div><Modal
                   visible={visible}
@@ -115,24 +121,13 @@ class RestCertList extends Component {
                         <Radio value={1}>复训</Radio>
                       </Radio.Group>
                     </Form.Item>
-                    {this.state.retrain === 1 ? <Form.Item
-                      name="currDiplomaID"
-                      label="初训证书编号"
-                      rules={[
-                        {
-                          required: false,
-                          message: '请输入证书编号',
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item> : null}
-                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="证书有效日期">
-                      <DatePicker />
+                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
+                    <DatePicker locale={LocalFormat.getDefinedChineseLocal()} />
                     </Form.Item> : null}
 
                   </Form>
                 </Modal>
+                  <a key="list-loadmore-edit" onClick={() => { this.setState({ visible: true, selectedItem: item }) }} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
                 </ div>]}
           >
             <Skeleton active loading={loading}>

@@ -28,7 +28,11 @@ class Register extends Component {
                         registerError={this.props.application.registerError}
                         resetRegisterStatus={this.props.actions.resetRegisterStatus}
                         application={this.props.application}
+                        getUserInfo={this.props.actions.getUserInfo}
+                        userInfo={this.props.application.userInfo}
+                        username={this.props.application.username}
                         user={this.props.user}
+                        requestLogin={this.props.actions.requestLogin}
                     />
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>

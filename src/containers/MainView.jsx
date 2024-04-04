@@ -36,9 +36,9 @@ class MainView extends Component {
       case "1":
         this.props.history.push("/homepage");
         break;
-      // case "2":
-      //   this.props.history.push("/courseselect");
-      //   break;
+      case "2":
+        this.props.history.push("/courseselect");
+        break;
       case "3":
         this.props.history.push("/certpage");
         break;
@@ -105,11 +105,11 @@ class MainView extends Component {
                 我的课程
               </Menu.Item>
             ) : null}
-            {/* {this.props.application.userInfo ? (
+            {this.props.application.userInfo ? (
               <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
                 我要选课
               </Menu.Item>
-            ) : null} */}
+            ) : null}
             {this.props.application.userInfo ? (
               <Menu.Item key="3" icon={<AuditOutlined />} title={""}>
                 我的证书

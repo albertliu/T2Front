@@ -17,7 +17,7 @@ export default class CertList extends Component {
     if (cert.cancelAllow === 0) {
       this.props.actions.postDelCert({ ID: cert.ID, mark: 1 })
     } else {
-      message.error('無法刪除')
+      message.error('无法刪除')
     }
   }
 

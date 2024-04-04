@@ -15,11 +15,11 @@ function getBase64(img, callback) {
 function beforeUpload(file) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
+    message.error('只能上传JPG/PNG格式文件!');
   }
   const isLt2M = file.size / 1024 / 1024 < 10;
   if (!isLt2M) {
-    message.error('Image must smaller than 10MB!');
+    message.error('文件大小不能超过10MB!');
   }
   return isJpgOrPng && isLt2M;
 }
@@ -38,17 +38,21 @@ class Avatar extends Component {
       this.setState({ loading: true });
       return;
     }
-    if (info.file.status === 'done' && info.file.response && info.file.response.status === 0) {
+    if (info.file.status === 'done' && info.file.response) {
       // Get this url from response in real world.
-      message.success('上传成功已保存')
-      this.props.actions.getUserInfo({ username: this.props.application.username })    
-      this.setState({imageHash:Date.now()})
-      getBase64(info.file.originFileObj, imageUrl =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        }),
-      );
+      if(info.file.response.status === 0) {
+        message.success('上传成功已保存')
+        this.props.actions.getUserInfo({ username: this.props.application.username })    
+        this.setState({imageHash:Date.now()})
+        getBase64(info.file.originFileObj, imageUrl =>
+          this.setState({
+            imageUrl,
+            loading: false,
+          }),
+        );
+      }else{
+        message.warning('上传失败，请再试一次')
+      }
     }
   };
 
@@ -72,7 +76,7 @@ class Avatar extends Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        {imageUrl ? <img key={imageHash} src={`${imageUrl}?${imageHash}`} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {imageUrl ? <img key={imageHash} src={`${imageUrl}?${imageHash}`} alt="avatar" style={{ width: '100%', height:'auto' }} /> : uploadButton}
       </Upload>
     );
   }

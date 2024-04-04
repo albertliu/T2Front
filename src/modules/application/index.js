@@ -24,6 +24,8 @@ const AUDITOR_LOGIN_ERROR = 'auditor_login_error'
 const UPDATE_AUDITOR = 'update_auditor'
 const AUDITOR_REQUEST_LOGIN = 'auditor_request_login'
 const UPDATE_FROM_ID = 'update_from_id'
+const UPDATE_HOST = 'update_host'
+const UPDATE_PARTNER = 'update_partner'
 
 export const types = {
     REQUEST_LOGIN,
@@ -50,7 +52,9 @@ export const types = {
     AUDITOR_LOGIN_ERROR,
     UPDATE_AUDITOR,
     AUDITOR_REQUEST_LOGIN,
-    UPDATE_FROM_ID
+    UPDATE_FROM_ID,
+    UPDATE_HOST,
+    UPDATE_PARTNER
 }
 
 //Action creators
@@ -176,6 +180,16 @@ const updateFromID = data => ({
     data
 })
 
+const updateHost = data => ({
+    type: UPDATE_HOST,
+    data
+})
+
+const updatePartner = data => ({
+    type: UPDATE_PARTNER,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -201,7 +215,9 @@ export const actions = {
     auditorLoginError,
     updateAuditor,
     auditorRequestLogin,
-    updateFromID
+    updateFromID,
+    updateHost,
+    updatePartner
 }
 
 const initialState = {
@@ -217,7 +233,10 @@ const initialState = {
     newCourse: null,
     auditor: null,
     fromID: null,
-    teacher: null
+    teacher: null,
+    host: null,
+    partner: null,
+    sales: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -328,6 +347,18 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 fromID: action.data
+            }
+        }
+        case UPDATE_HOST: {
+            return {
+                ...state,
+                host: action.data
+            }
+        }
+        case UPDATE_PARTNER: {
+            return {
+                ...state,
+                partner: action.data
             }
         }
         case USER_LOGOUT: {

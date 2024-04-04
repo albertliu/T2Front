@@ -18,7 +18,7 @@ export default class CertList extends Component {
     if (cert.cancelAllow === 0) {
       this.props.actions.postDelCert({ ID: cert.ID, mark: 0 })
     } else {
-      message.error('無法刪除')
+      message.error('无法刪除')
     }
   }
 
@@ -66,8 +66,8 @@ export default class CertList extends Component {
               title="该课程已有的学习记录将被清空，确认要删除吗？"
               onConfirm={() => this.onRemove(item)}
               onCancel={this.onCancel}
-              okText="Yes"
-              cancelText="No"
+              okText="确定"
+              cancelText="取消"
             >
               <a key={item.ID} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
             </Popconfirm>
