@@ -74,11 +74,11 @@ class VideoPlayer extends Component {
     }
 
     componentDidUpdate () {
-        if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.status === 1 && !this.state.shotVisible && this.props.application.username === "111"){
+        if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.status === 1 && !this.state.shotVisible){
             this.setState({ shotNow: true });
             this.props.courseActions.updateMaxTime(null)
         }
-        if(this.state.shotNow && !this.state.shotVisible && !this.state.doCancel && this.props.application.username === "111"){
+        if(this.state.shotNow && !this.state.shotVisible && !this.state.doCancel){
             this.setState({ shotVisible: true });
             this.player.pause();
         }

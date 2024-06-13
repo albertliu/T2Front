@@ -91,7 +91,7 @@ export function postCheckinEndpoint(data) {
 }
 
 export function postFaceDetectOSSEndpoint(data) {
-    return axios.post('/outfiles/uploadFaceDetectOSS', data)
+    return axios.post('/alis/uploadFaceDetectOSS', data)
 }
 
 

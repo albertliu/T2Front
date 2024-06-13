@@ -243,13 +243,13 @@ class LessonCard extends Component {
                             <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p>
                             <p>完成条件：{course.pass_condition}</p>
-                            {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
+                            {!this.props.application.teacher ? <Button onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
                         </Card.Grid> : null}
                         {course.signatureType === 1 && course.signature === "" && course.try === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "" || course.try === 1) ? <Card.Grid style={{ textAlign: 'left',width:'100%',backgroundColor: '#F3FFFF' }}>
                             <div style={{padding:'5px'}}>
-                                <Button onClick={() => this.onClickShowItem(course.ID)} >课程详细内容</Button>
+                                <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >课程详细内容</Button>
                             </div>
                             <p> </p>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItem===course.ID ? "block" : "none")}}>
