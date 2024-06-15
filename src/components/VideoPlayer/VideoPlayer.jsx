@@ -83,10 +83,10 @@ class VideoPlayer extends Component {
             this.player.pause();
         }
         if(this.state.shotVisible && this.props.user.faceDetectOSS){
+            message.warning(this.props.user.faceDetectOSS.msg);
             if(this.props.user.faceDetectOSS.status===2 && !this.state.warning){
                 // 比对未通过
                 this.setState({ warning: true });
-                message.warning('人脸检测未通过，请重新拍摄');
             }
             if(this.props.user.faceDetectOSS.status<2){
                 // 比对通过或没有比对
