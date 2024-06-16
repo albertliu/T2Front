@@ -102,28 +102,40 @@ class VideoPlayer extends Component {
         ReactDOM.findDOMNode(this.fileInput).click();
     };
 
-    handleChange = info => {
-        // console.log("file：", info.target.files[0]);
-        this.getBase64(info.target.files[0], (result) => {
-            // console.log("dataBase64", result);
-            this.props.userActions.postFaceDetectOSS({
-                refID: this.props.video.ID,
-                kindID: 0,
-                base64Data: result,
-                username: this.props.application.username
-            })
+    handleChange = async (info) => {
+        const file = info.target.files[0];
+        const base64Data = await this.getBase64(file);
+        // message.warning(base64Data.length);
+        this.props.userActions.postFaceDetectOSS({
+            refID: this.props.video.ID,
+            kindID: 0,
+            base64Data: base64Data,
+            username: this.props.application.username
         });
     };
-
-    getBase64(file, cb) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            cb(reader.result)
-        };
-        reader.onerror = function (error) {
-            console.log('Error: ', error);
-        };
+ 
+    getBase64(file) {
+        return new Promise ((resolve, reject) => {
+            let image = new Image();
+            image.onload = function() {
+              let canvas = document.createElement('canvas');
+              canvas.width = this.naturalWidth;
+              canvas.height = this.naturalHeight;
+              // 将图片插入画布并开始绘制
+              canvas.getContext('2d').drawImage(image, 0, 0);
+              // result
+              let result = canvas.toDataURL('image/png', 0.1);
+              window.URL.revokeObjectURL(image.src);
+              resolve(result);
+            };
+            // CORS 策略，会存在跨域问题https://stackoverflow.com/questions/20424279/canvas-todataurl-securityerror
+            image.setAttribute("crossOrigin",'Anonymous');
+            image.src = window.URL.createObjectURL(file);
+            // 图片加载失败的错误处理
+            image.onerror = () => {
+              reject(new Error('图片流异常'));
+            };
+        });
     }
         
     onClickCancel = () => {
