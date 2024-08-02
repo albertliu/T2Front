@@ -36,6 +36,20 @@ class App extends Component {
       message.success("登录成功");
     }
     if (
+      this.props.application.loggedIn === true &&
+      nextProps.application.loggedIn === 401
+    ) {
+      message.error("登录已超时，自动退出。");
+      this.props.actions.updateLoginStatus(false);
+    }
+    if (
+      this.props.application.loggedIn === true &&
+      nextProps.application.loggedIn === 501
+    ) {
+      message.error("已在其他设备登录，自动退出。");
+      this.props.actions.updateLoginStatus(false);
+    }
+    if (
       this.props.application.loggedIn === false &&
       nextProps.user.resetStatus !== null
     ) {

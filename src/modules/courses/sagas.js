@@ -1,5 +1,6 @@
 import { takeLatest, all, call, put } from 'redux-saga/effects'
 import { actions, types } from '../courses'
+import { handleAuthenticationErrors } from '../util/errorHandling'
 import axios from 'axios'
 
 //watchers
@@ -73,7 +74,7 @@ function* loadCourseWorker(action) {
         const response = yield call(getCourseList, action.payload)
         yield put(actions.updateCourseList(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -82,7 +83,7 @@ function* loadLessonWorker(action) {
         const response = yield call(getLessonList, action.payload)
         yield put(actions.updateLessonList(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -91,7 +92,7 @@ function* loadVideoWorker(action) {
         const response = yield call(getVideo, action.payload)
         yield put(actions.updateVideo(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -100,7 +101,7 @@ function* loadPDFWorker(action) {
         const response = yield call(getPDF, action.payload)
         yield put(actions.updatePDF(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -109,7 +110,7 @@ function* updateMaxTimeWorker(action) {
         const response = yield call(postMaxTime, action.payload)
         yield put(actions.updateMaxTime(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -118,7 +119,7 @@ function* updateMaxPageWorker(action) {
         const response = yield call(postMaxPage, action.payload)
         yield put(actions.updateMaxPage(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -127,7 +128,7 @@ function* updateSignatureWorker(action) {
         const response = yield call(postSignature, action.payload)
         yield put(actions.updateSignature(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
