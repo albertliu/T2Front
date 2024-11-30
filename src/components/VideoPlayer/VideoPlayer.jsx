@@ -203,6 +203,7 @@ class VideoPlayer extends Component {
                     capture="user"
                     ref={(el) => (this.fileInput = el)}
                     accept="image/*"
+                    onClick={(e) => {e.target.value = ''}}
                     onChange={this.handleChange}
                     style={{ display: "none" }}
                 />
