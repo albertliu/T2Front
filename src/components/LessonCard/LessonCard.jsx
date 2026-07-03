@@ -23,6 +23,10 @@ class LessonCard extends Component {
             signatureAgreementChecked: false,
             signatureModalVisible: false,
             signatureBtnDisable: true,
+            pay: 0,
+            invoice: 0,
+            showPayBtn: true,
+            showInvoiceBtn: true,
             img: null,
             busy: false,
             loading: true,
@@ -106,6 +110,32 @@ class LessonCard extends Component {
             this.sigCanvas.clear()
             this.props.actions.updateSignature(null)
             this.setState({ signatureModalVisible: false })
+        }
+
+        if (this.props.courseState.postPayment && !prevProps.courseState.postPayment) {
+            if (this.props.courseState.postPayment.code === "JH200") {
+                if(this.state.pay === 1){
+                    this.setState({ showPayBtn: false });
+                    let redirectUrl = this.props.courseState.postPayment.result.payUtl;
+                    setTimeout(
+                        function(){
+                            window.location.href = redirectUrl;
+                    }, 0);   
+                }
+                if(this.state.invoice === 1){
+                    this.setState({ showInvoiceBtn: false })
+                    let redirectUrl = this.props.courseState.postPayment.result.invoiceUrl;
+                    // window.open(this.props.courseState.postPayment.result.invoiceUrl, "_blank");
+                    setTimeout(
+                        function(){
+                            window.location.href = redirectUrl;
+                    }, 0);   
+                }
+            } else {
+                message.error('链接失效，请稍后再试。' + this.props.courseState.postPayment.code);
+                this.setState({ pay: 0, invoice: 0 });
+            }
+            this.props.actions.updatePayment(null)
         }
     }
 
@@ -201,6 +231,22 @@ class LessonCard extends Component {
     onDocumentLoadSuccess = ({ numPages }) => {
         this.setState({ numPages, loading: false })
     }
+
+    onClickPay = () => {
+        this.props.actions.postPayment({
+            enterID: this.props.course.ID, //P7. getStudentCourseList.ID
+            kindID: 0   //支付
+        })
+        this.setState({ pay: 1 });
+    }
+
+    onClickInvoice = () => {
+        this.props.actions.postPayment({
+            enterID: this.props.course.ID, //P7. getStudentCourseList.ID
+            kindID: 2   //开票
+        })
+        this.setState({ invoice: 1 });
+    }
     
     onClickShowItem = (courseID) => {
         this.setState({ showItem: (this.state.showItem === 0 ? courseID : 0) })
@@ -247,7 +293,12 @@ class LessonCard extends Component {
                         </Card.Grid> : null}
                         {course.signatureType === 1 && course.signature === "" && course.try === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.status < 2 && (course.signatureType === 0 || course.signature > "" || course.try === 1) ? <Card.Grid style={{ textAlign: 'left',width:'100%',backgroundColor: '#F3FFFF' }}>
+                        {this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status === 0 && course.host > "" ? <Card.Grid style={this.gridStyle}>
+                            <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
+                        {this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
+                            <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
+                        {this.state.invoice === 1 ? <Card.Grid style={this.gridStyle}><p style={{ color: 'red' }}>将在三个工作日内完成开票，请注意短信通知</p></Card.Grid> : null}
+                        {course.status < 2 && (course.signatureType === 0 || course.signature > "" || course.try === 1) && (course.pay_status<2 || course.payNow===1) ? <Card.Grid style={{ textAlign: 'left',width:'100%',backgroundColor: '#F3FFFF' }}>
                             <div style={{padding:'5px'}}>
                                 <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >课程详细内容</Button>
                             </div>

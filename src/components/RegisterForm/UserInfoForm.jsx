@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Select, message, Row, Col } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
+import checkUSCI from '../../modules/function/checkUSCI'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from './Avatar'
@@ -29,6 +30,7 @@ class UserInfoForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
+        this.checkUSCI = checkUSCI
         this.state = { kindID: "0" }
     }
 
@@ -61,6 +63,7 @@ class UserInfoForm extends Component {
             province: values.province,
             address: values.address,
             unit: values.unit,
+            tax: values.tax,   //*单位统一编码
             linker: values.linker
         })
     }
@@ -204,13 +207,6 @@ class UserInfoForm extends Component {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    name="address"
-                    label="联系地址"
-                    rules={[{ required: true, message: '请输入联系地址' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
                     name="province"
                     label="邮政编码"
                 >
@@ -219,8 +215,44 @@ class UserInfoForm extends Component {
 
                 <Form.Item
                     name="unit"
-                    label="单位"
+                    label="单位全称"
                     rules={[{ required: true, message: '请输入单位' }]}
+                >
+                    <Input />
+                </Form.Item>
+                
+                <Form.Item
+                    name="tax"
+                    label="单位代码"
+                    rules={[
+                        {
+                            message: '请输入社会统一信用代码',
+                        },
+                        {
+                            validator: (rule, value) => {
+                                console.log(this.checkUSCI(value))
+                                if (!value || this.checkUSCI(value)) {
+                                    return Promise.resolve();
+                                } else if (value.length !== 18) {
+                                    return Promise.reject('编码长度应该是18位');
+                                } else
+                                    return Promise.reject('单位代码校验错误');
+                            }
+                        }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item
+                    name="email"
+                    label="单位地址"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="phone"
+                    label="单位电话"
                 >
                     <Input />
                 </Form.Item>
@@ -233,20 +265,15 @@ class UserInfoForm extends Component {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    name="phone"
-                    label="单位电话"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="email"
-                    label="单位地址"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
                     name="linker"
                     label="联系人"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="address"
+                    label="联系地址"
+                    rules={[{ required: true, message: '请输入联系地址' }]}
                 >
                     <Input />
                 </Form.Item>
