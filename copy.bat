@@ -1,4 +1,4 @@
-g:
-cd G:\Working\Project\eTrainT2\proxy\index
+D:
+cd D:\Working\Project\eTrainT2\T2Proxy\index
 del /Q static\js
-xcopy /QEY G:\Working\Project\eTrainT2\course-app-ui\build\*.*
+xcopy /QEY D:\Working\Project\eTrainT2\T2Front\build\*.*

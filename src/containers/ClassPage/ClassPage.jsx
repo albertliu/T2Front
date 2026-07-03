@@ -80,6 +80,7 @@ class ClassPage extends Component {
                 <VideoPlayer
                   actions={this.props.actions}
                   video={this.props.course.video[0]}
+                  onError={this.onClickBack}
                 />
               </Col>
             </Row>
